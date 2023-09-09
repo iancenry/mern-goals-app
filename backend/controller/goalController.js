@@ -59,7 +59,18 @@ const updateGoal = asyncHandler(async (req, res) => {
  * @access Private
  */
 const deleteGoal = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `${req.params.id} goal deleted` });
+  const goal = await Goal.findById(req.params.id);
+
+  if (!goal) {
+    res.status(400);
+    throw new Error('Goal not found');
+  }
+
+  const deletedGoal = await Goal.findByIdAndDelete(req.params.id);
+
+  res
+    .status(200)
+    .json({ message: `${req.params.id} goal deleted`, deletedGoal });
 });
 
 const postGoal = (module.exports = {
