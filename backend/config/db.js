@@ -14,5 +14,3 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
-
-// 44:00
