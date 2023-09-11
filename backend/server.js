@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: false }));
 
 const goalApiRoutes = require('./routes/goalRoutes');
 app.use('/api/goals', goalApiRoutes);
+const userApiRoutes = require('./routes/userRoutes');
+app.use('/api/users', userApiRoutes);
 
 // custom err handler work with express-async-handler
 app.use(errorHandler);
