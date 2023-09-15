@@ -36,6 +36,8 @@ export const register = createAsyncThunk(
   }
 )
 
+// TODO add logout functionality
+
 export const authSlice = createSlice({
   name: "auth", //state name
   initialState, //initial state value(s)
