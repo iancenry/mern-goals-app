@@ -35,3 +35,5 @@ const App: React.FC = () => {
 }
 
 export default App
+
+// TODO add cookies and remove use of local storage
