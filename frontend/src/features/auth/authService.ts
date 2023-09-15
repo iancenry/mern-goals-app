@@ -1,13 +1,14 @@
 // service file - all http requests
 import axios from "axios"
-import { IUser } from "../../@types/redux"
+import { IUser, IUserRegistration } from "../../@types/redux"
 
-const API_URL = "/api/users/"
+//TODO add proxy in package.json and remove 'http://localhost:5000' part
+const API_URL = "http://localhost:5000/api/users/"
 
-type register = (userData: IUser) => Promise<IUser>
+type register = (userData: IUserRegistration) => Promise<IUser>
 
 //Register user
-const register: register = async (userData: IUser) => {
+const register: register = async (userData: IUserRegistration) => {
   const response = await axios.post(API_URL, userData)
 
   if (response.data) {
@@ -23,5 +24,4 @@ const authService = {
 
 export default authService
 
-// TODO define function TS type  == (userData: IUser) => AxiosResponse<IUser>
-// TODO check if my type in line  is the correct way
+// TODO define function TS type  == (userData: IUserRegistration) => AxiosResponse<IUser>
