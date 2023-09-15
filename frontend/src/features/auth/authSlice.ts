@@ -1,12 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { IUser } from "../../@types/redux"
+import { IUser, IAuthState, IUserRegistration } from "../../@types/redux"
 import authService from "./authService"
+import axios from "axios"
 
-//Get user from localStorage
-// TODO check if code is correct
-const user: IUser | null = JSON.parse(localStorage.getItem("user") as string)
+const user: IUser | null = JSON.parse(localStorage.getItem("user")!)
 
-const initialState = {
+const initialState: IAuthState = {
   user: user ? user : null,
   isError: false,
   isSuccess: false,
@@ -17,14 +16,20 @@ const initialState = {
 //Async Thunk Function - Register user
 export const register = createAsyncThunk(
   "auth/register",
-  async (user: IUser, thunkAPI) => {
+  async (user: IUserRegistration, thunkAPI) => {
     try {
       return await authService.register(user)
     } catch (error) {
-      //TODO - define error type and thunkAPI type
+      let message: string = ""
+
       //different checks where message might exist
-      const message: string =
-        error.response?.data?.message || error.message || error.toString()
+      if (error instanceof Error) {
+        message = error.message
+      } else if (typeof error === "string") {
+        message = error.toString()
+      } else if (axios.isAxiosError(error)) {
+        message = error?.response?.data?.message
+      }
       //reject and send error message as payload
       return thunkAPI.rejectWithValue(message)
     }
@@ -43,7 +48,7 @@ export const authSlice = createSlice({
       state.message = ""
     },
   },
-  //async functions to account for pending, fulfilled and reject states  when we make a register
+  // account for pending, fulfilled and reject states  when we make a register call
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
@@ -57,7 +62,8 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
-        state.message = action.payload
+        state.message = action.payload as string
+        state.user = null
       })
   },
 })
