@@ -1,5 +1,5 @@
 import Dashboard from "./Dashboard"
-import Login, { action } from "./Login"
-import Register, { registerAction } from "./Register"
+import Login from "./Login"
+import Register from "./Register"
 
-export { Dashboard, Login, Register, action, registerAction }
+export { Dashboard, Login, Register }
