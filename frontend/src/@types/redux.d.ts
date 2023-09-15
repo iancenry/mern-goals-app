@@ -1,10 +1,9 @@
-// export type Actions =
-//   | { type: "add"; payload: string }
-//   | { type: "remove"; payload: number }
-//   | { type: "done"; payload: number }
-// https://redux.js.org/introduction/core-concepts
-
-export interface IState {}
+//data sent to server
+export interface IUserRegistration {
+  name: string
+  email: string
+  password: string
+}
 
 //data returned on registration from server
 export interface IUser {
@@ -22,3 +21,9 @@ export interface IAuthState {
   isLoading: boolean
   message: string
 }
+
+// export type Actions =
+//   | { type: "add"; payload: string }
+//   | { type: "remove"; payload: number }
+//   | { type: "done"; payload: number }
+// https://redux.js.org/introduction/core-concepts
