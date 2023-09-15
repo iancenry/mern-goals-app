@@ -4,14 +4,14 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom"
-import {
-  Dashboard,
-  Login,
-  Register,
-  action as loginAction,
-  registerAction,
-} from "./pages"
+
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
+import { Dashboard, Login, Register } from "./pages"
 import Layout from "./components/Layout"
+
+import { loginAction, registerAction } from "./utils/actions"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +29,7 @@ const App: React.FC = () => {
       <div className="container">
         <RouterProvider router={router} />
       </div>
+      <ToastContainer />
     </>
   )
 }
