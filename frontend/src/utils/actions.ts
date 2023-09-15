@@ -1,8 +1,14 @@
-import { redirect } from "react-router-dom"
-import { IRegisterFormData } from "../@types/form"
-import { useAppDispatch } from "../app/hooks"
+import { IRegisterFormUserData } from "../@types/form"
 import { toast } from "react-toastify"
 
+import { store } from "../app/store"
+import { register } from "../features/auth/authSlice"
+
+/**
+ * Get Registration Form data and register user
+ * @param {Request} request - comes from the Form Component
+ * @returns {null} - redirects to protected dashboard route
+ */
 export async function registerAction({ request }: { request: Request }) {
   const formData: FormData = await request.formData()
   const name = formData.get("name")
@@ -10,34 +16,35 @@ export async function registerAction({ request }: { request: Request }) {
   const password = formData.get("password")
   const confirmPassword = formData.get("confirmPassword")
 
-  console.log(name, email, password, confirmPassword)
-
-  const errors: IRegisterFormData = {} as IRegisterFormData
-
   //validate the fields - switch with regex
   if (typeof name !== "string" || name.length < 6) {
-    errors.name = "Please provide your real name"
+    toast.error("Please provide your real name")
+    return
   }
 
   if (typeof email !== "string" || !email.includes("@")) {
-    errors.email = "That doesn't look like an email address"
+    toast.error("That doesn't look like an email address")
+    return
   }
 
   if (typeof password !== "string" || password.length < 6) {
-    errors.password = "Password must be > 6 characters"
+    toast.error("Password must be > 6 characters")
+    return
   }
 
   if (password !== confirmPassword) {
-    errors.confirmPassword = "Passwords do not match"
     toast.error("Passwords do not match")
+    return
   }
 
-  // create the user and redirect
-  //   await createUser(email, password)
-  // return redirect("/dashboard")
-  return { name, email, password, confirmPassword }
+  const userData: IRegisterFormUserData = { name, email, password }
+
+  // register user
+  store.dispatch(register(userData))
+  return null
 }
 
+// get login Form Data
 export async function loginAction({ request }: { request: Request }) {
   const formData: FormData = await request.formData()
   const email = formData.get("email")
