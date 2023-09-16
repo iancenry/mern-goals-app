@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { IUser, IAuthState, IUserRegistration } from "../../@types/redux"
+import {
+  IUser,
+  IAuthState,
+  IUserRegistration,
+  IUserLogin,
+} from "../../@types/redux"
 import authService from "./authService"
 import axios from "axios"
 
@@ -19,6 +24,29 @@ export const register = createAsyncThunk(
   async (user: IUserRegistration, thunkAPI) => {
     try {
       return await authService.register(user)
+    } catch (error) {
+      let message: string = ""
+
+      //different checks where message might exist
+      if (error instanceof Error) {
+        message = error.message
+      } else if (typeof error === "string") {
+        message = error.toString()
+      } else if (axios.isAxiosError(error)) {
+        message = error?.response?.data?.message
+      }
+      //reject and send error message as payload
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+//Login User
+export const login = createAsyncThunk(
+  "auth/login",
+  async (user: IUserLogin, thunkAPI) => {
+    try {
+      return await authService.login(user)
     } catch (error) {
       let message: string = ""
 
@@ -68,6 +96,9 @@ export const authSlice = createSlice({
         state.isLoading = false
         state.isError = true
         state.message = action.payload as string
+        state.user = null
+      })
+      .addCase(logout.fulfilled, (state) => {
         state.user = null
       })
   },
