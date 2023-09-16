@@ -3,17 +3,16 @@ import { Form, useNavigation, useNavigate } from "react-router-dom"
 import { FaUser } from "react-icons/fa"
 import Spinner from "../components/Spinner"
 
-import { useAppSelector } from "../app/hooks"
+import { useAppDispatch, useAppSelector } from "../app/hooks"
 import { useEffect } from "react"
 import { toast } from "react-toastify"
 
 import { reset } from "../features/auth/authSlice"
-import { useDispatch } from "react-redux"
 
 const Register = () => {
   const navigation = useNavigation()
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const { user, isLoading, isError, isSuccess, message } = useAppSelector(
     (state) => state.auth
