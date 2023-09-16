@@ -1,36 +1,18 @@
-import {
-  Form,
-  // useLoaderData,
-  // redirect,
-  // useActionData,
-  useNavigation,
-} from "react-router-dom"
+import { Form, useNavigation } from "react-router-dom"
+
+import Spinner from "../components/Spinner"
 import { FaSign } from "react-icons/fa"
 
-export async function action({ request }: { request: Request }) {
-  const formData: FormData = await request.formData()
-  const email = formData.get("email")
-  const password = formData.get("password")
-  console.log(email, password)
-  // // get url that directed user to login page; default to host route
-  // const previousPathname =
-  //   new URL(request.url).searchParams.get("redirectTo") || "/register"
-
-  try {
-    // const data = await loginUser({ email, password })
-    // localStorage.setItem("loggedIn", true)
-    // return redirect(previousPathname)
-  } catch (error) {
-    // return error.message
-  }
-
-  return null
-}
+import useReduxAuthState from "../hooks/useReduxAuthState"
 
 const Login = () => {
-  // const errorMessage = useActionData()
-  // const message = useLoaderData()
   const navigation = useNavigation()
+
+  const isLoading = useReduxAuthState()
+
+  if (isLoading) {
+    return <Spinner />
+  }
 
   return (
     <>
@@ -42,8 +24,6 @@ const Login = () => {
       </section>
 
       <section className="form">
-        {/* {errorMessage && <h3 className="red">{errorMessage}</h3>} */}
-        {/* {message && <h3 className="red">{message}</h3>} */}
         <Form method="post">
           <div className="form-group">
             <input type="email" name="email" placeholder="Email Address" />

@@ -1,13 +1,7 @@
-import { Form, useNavigation, useNavigate } from "react-router-dom"
+import { Form, useNavigation } from "react-router-dom"
 
 import { FaUser } from "react-icons/fa"
 import Spinner from "../components/Spinner"
-
-// import { useAppDispatch, useAppSelector } from "../app/hooks"
-// import { useEffect } from "react"
-// import { toast } from "react-toastify"
-
-// import { reset } from "../features/auth/authSlice"
 
 import useReduxAuthState from "../hooks/useReduxAuthState"
 
