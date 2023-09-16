@@ -3,29 +3,17 @@ import { Form, useNavigation, useNavigate } from "react-router-dom"
 import { FaUser } from "react-icons/fa"
 import Spinner from "../components/Spinner"
 
-import { useAppDispatch, useAppSelector } from "../app/hooks"
-import { useEffect } from "react"
-import { toast } from "react-toastify"
+// import { useAppDispatch, useAppSelector } from "../app/hooks"
+// import { useEffect } from "react"
+// import { toast } from "react-toastify"
 
-import { reset } from "../features/auth/authSlice"
+// import { reset } from "../features/auth/authSlice"
+
+import useReduxAuthState from "../hooks/useReduxAuthState"
 
 const Register = () => {
   const navigation = useNavigation()
-
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const { user, isLoading, isError, isSuccess, message } = useAppSelector(
-    (state) => state.auth
-  )
-
-  useEffect(() => {
-    if (isError) toast.error(message)
-    if (isSuccess || user) {
-      navigate("/")
-    }
-    // reset all redux states back to false
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+  const isLoading = useReduxAuthState()
 
   if (isLoading) {
     return <Spinner />
