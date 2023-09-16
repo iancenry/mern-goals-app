@@ -13,7 +13,7 @@ const initialState: IAuthState = {
   message: "",
 }
 
-//Async Thunk Function - Register user
+// Register user
 export const register = createAsyncThunk(
   "auth/register",
   async (user: IUserRegistration, thunkAPI) => {
@@ -36,7 +36,10 @@ export const register = createAsyncThunk(
   }
 )
 
-// TODO add logout functionality
+// logout
+export const logout = createAsyncThunk("auth/logout", async () => {
+  await authService.logout()
+})
 
 export const authSlice = createSlice({
   name: "auth", //state name

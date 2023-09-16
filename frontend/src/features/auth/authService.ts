@@ -18,8 +18,14 @@ const register: register = async (userData: IUserRegistration) => {
   return response.data
 }
 
+//Logout User
+const logout = () => {
+  localStorage.removeItem("user")
+}
+
 const authService = {
   register,
+  logout,
 }
 
 export default authService
