@@ -81,7 +81,7 @@ export const authSlice = createSlice({
       state.message = ""
     },
   },
-  // account for pending, fulfilled and reject states  when we make a register call
+  // account for pending, fulfilled and reject states  when we make a register, login, logout call
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
@@ -90,9 +90,23 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.user = action.payload // returned from register function
+        state.user = action.payload // returned from register function;backend res
       })
       .addCase(register.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload as string
+        state.user = null
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.user = action.payload
+      })
+      .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload as string
