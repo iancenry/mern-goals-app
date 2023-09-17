@@ -78,9 +78,8 @@ const loginUser = asyncHandler(async (req, res) => {
  * @access Private - protected route
  */
 const getUserData = asyncHandler(async (req, res) => {
-  //req.user.id is set in the auth middleware
-  const { _id, name, email } = await User.findById(req.user.id);
-  res.status(200).json({ id: _id, name, email });
+  //req.user is set in the auth middleware
+  res.status(200).json(req.user);
 });
 
 //Generate JWT - takes id since user id will be the payload
