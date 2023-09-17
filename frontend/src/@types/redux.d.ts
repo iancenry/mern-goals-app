@@ -1,11 +1,17 @@
-//data sent to server
+//data sent to server on register
 export interface IUserRegistration {
   name: string
   email: string
   password: string
 }
 
-//data returned on registration from server
+//data sent to server on login
+export interface IUserLogin {
+  email: string
+  password: string
+}
+
+//data returned on registration/login from server
 export interface IUser {
   _id: string
   name: string
@@ -21,9 +27,3 @@ export interface IAuthState {
   isLoading: boolean
   message: string
 }
-
-// export type Actions =
-//   | { type: "add"; payload: string }
-//   | { type: "remove"; payload: number }
-//   | { type: "done"; payload: number }
-// https://redux.js.org/introduction/core-concepts
