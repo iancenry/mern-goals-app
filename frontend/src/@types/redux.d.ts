@@ -27,3 +27,17 @@ export interface IAuthState {
   isLoading: boolean
   message: string
 }
+
+//Goal
+export interface IGoal {
+  goal: string
+}
+
+//goalSlice initial state
+export interface IGoalState {
+  goals: IGoal[]
+  isError: boolean
+  isSuccess: boolean
+  isLoading: boolean
+  message: string
+}
