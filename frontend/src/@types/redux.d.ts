@@ -30,7 +30,7 @@ export interface IAuthState {
 
 //Goal
 export interface IGoal {
-  goal: string
+  text: string
 }
 
 //goalSlice initial state
