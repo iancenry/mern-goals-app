@@ -1,8 +1,9 @@
-import { IRegisterFormUserData, ILoginForm } from "../@types/form"
+import { IRegisterFormUserData, ILoginForm, IGoalForm } from "../@types/form"
 import { toast } from "react-toastify"
 
 import { store } from "../app/store"
 import { register, login } from "../features/auth/authSlice"
+import { createGoal } from "../features/goals/goalSlice"
 
 /**
  * Get Registration Form data and register user
@@ -70,4 +71,26 @@ export async function loginAction({ request }: { request: Request }) {
   // login user
   store.dispatch(login(userData))
   return null
+}
+
+/**
+ * Get Goal Data
+ * @param {Request} request - comes from the Form Component
+ * @returns {null}
+ */
+export async function goalAction({ request }: { request: Request }) {
+  const formData: FormData = await request.formData()
+  const text = formData.get("text")
+
+  //validate the fields - switch with regex
+  if (typeof text !== "string" || text.length < 1) {
+    toast.error("Input a goal")
+    return
+  }
+
+  const goalData: IGoalForm = { text }
+
+  // create goal
+  store.dispatch(createGoal(goalData))
+  return 0
 }
