@@ -37,11 +37,35 @@ export const createGoal = createAsyncThunk(
   }
 )
 
+// Get user's goals
+export const getGoals = createAsyncThunk(
+  "goals/getAll",
+  async (_, thunkAPI) => {
+    try {
+      const authToken: string = thunkAPI.getState().auth.user.token
+      return await goalService.getGoals(authToken)
+    } catch (error) {
+      let message: string = ""
+
+      if (error instanceof Error) {
+        message = error.message
+      } else if (typeof error === "string") {
+        message = error.toString()
+      } else if (axios.isAxiosError(error)) {
+        message = error?.response?.data?.message
+      }
+      //reject and send error message as payload
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const goalSlice = createSlice({
   name: "goal",
   initialState,
   reducers: {
     //goal doesnt have to persist unlike user
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     reset: (_state) => initialState,
   },
   extraReducers: (builder) => {
