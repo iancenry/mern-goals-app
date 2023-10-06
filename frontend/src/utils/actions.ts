@@ -1,4 +1,4 @@
-import { IRegisterFormUserData, ILoginForm, IGoalForm } from "../@types/form"
+import { IRegisterFormUserData, ILoginForm } from "../@types/form"
 import { toast } from "react-toastify"
 
 import { store } from "../app/store"
@@ -88,7 +88,7 @@ export async function goalAction({ request }: { request: Request }) {
     return
   }
 
-  const goalData: IGoalForm = { text }
+  const goalData = { text }
 
   // create goal
   store.dispatch(createGoal(goalData))

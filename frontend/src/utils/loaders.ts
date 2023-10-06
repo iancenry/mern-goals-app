@@ -1,5 +1,5 @@
-import { json } from "react-router-dom"
-import { store } from "../app/store"
+// import { json } from "react-router-dom"
+// import { store } from "../app/store"
 
 // export const registerLoader  = async () => {
 //   try {
@@ -19,3 +19,5 @@ import { store } from "../app/store"
 //     );
 //   }
 // }
+
+// useLoaderData,
