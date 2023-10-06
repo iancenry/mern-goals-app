@@ -28,14 +28,17 @@ export interface IAuthState {
   message: string
 }
 
-//Goal
-export interface IGoal {
+export interface DBGoal {
+  _id?: string
+  user?: string
   text: string
+  createdAt: string
+  updatedAt?: Date
 }
 
 //goalSlice initial state
 export interface IGoalState {
-  goals: IGoal[]
+  goals: DBGoal[]
   isError: boolean
   isSuccess: boolean
   isLoading: boolean
