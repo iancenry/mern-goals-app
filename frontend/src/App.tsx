@@ -11,12 +11,12 @@ import "react-toastify/dist/ReactToastify.css"
 import { Dashboard, Login, Register } from "./pages"
 import Layout from "./components/Layout"
 
-import { loginAction, registerAction } from "./utils/actions"
+import { loginAction, registerAction, goalAction } from "./utils/actions"
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Layout />}>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<Dashboard />} action={goalAction} />
       <Route path="login" element={<Login />} action={loginAction} />
       <Route path="register" element={<Register />} action={registerAction} />
     </Route>

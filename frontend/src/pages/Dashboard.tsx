@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../app/hooks"
 import GoalForm from "../components/GoalForm"
 
 import Spinner from "../components/Spinner"
-import { getGoals, reset } from "../features/goals/goalSlice"
+import { getGoals } from "../features/goals/goalSlice"
 import GoalItem from "../components/GoalItem"
 
 const Dashboard = () => {
