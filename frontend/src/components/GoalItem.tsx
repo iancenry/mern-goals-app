@@ -11,7 +11,7 @@ const GoalItem = ({ goal }: { goal: DBGoal }) => {
         {new Date(goal.createdAt).toLocaleString("en-US")}
         <h2>{goal.text}</h2>
         <button
-          onClick={() => dispatch(deleteGoal(goal._id))}
+          onClick={() => dispatch(deleteGoal(goal._id as string))}
           className="close"
         >
           X

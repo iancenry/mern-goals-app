@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { IGoalState } from "../../@types/redux"
+import { IAuthState, IGoalState, IUser } from "../../@types/redux"
 
 import axios from "axios"
 import goalService from "./goalService"
@@ -18,7 +18,10 @@ export const createGoal = createAsyncThunk(
   async (goalData: { text: string }, thunkAPI) => {
     try {
       // get token from redux state
-      const authToken: string = thunkAPI.getState().auth.user.token
+      // const authToken: string = thunkAPI.getState().auth.user.token
+      const { auth } = thunkAPI.getState() as { auth: IAuthState }
+      const { user } = auth as { user: IUser }
+      const authToken: string = user.token
       return await goalService.createGoal(goalData, authToken)
     } catch (error) {
       let message: string = ""
@@ -42,7 +45,9 @@ export const getGoals = createAsyncThunk(
   "goals/getAll",
   async (_, thunkAPI) => {
     try {
-      const authToken: string = thunkAPI.getState().auth.user.token
+      const { auth } = thunkAPI.getState() as { auth: IAuthState }
+      const { user } = auth as { user: IUser }
+      const authToken: string = user.token
       return await goalService.getGoals(authToken)
     } catch (error) {
       let message: string = ""
@@ -66,7 +71,9 @@ export const deleteGoal = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       // get token from redux state
-      const authToken: string = thunkAPI.getState().auth.user.token
+      const { auth } = thunkAPI.getState() as { auth: IAuthState }
+      const { user } = auth as { user: IUser }
+      const authToken: string = user.token
       return await goalService.deleteGoal(id, authToken)
     } catch (error) {
       let message: string = ""
